@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HelpRouteImport } from './routes/help'
+import { Route as MoodRouteImport } from './routes/mood'
+import { Route as ScreeningRouteImport } from './routes/screening'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoodRoute = MoodRouteImport.update({
+  id: '/mood',
+  path: '/mood',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScreeningRoute = ScreeningRouteImport.update({
+  id: '/screening',
+  path: '/screening',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/help': typeof HelpRoute
+  '/mood': typeof MoodRoute
+  '/screening': typeof ScreeningRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/help': typeof HelpRoute
+  '/mood': typeof MoodRoute
+  '/screening': typeof ScreeningRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/help': typeof HelpRoute
+  '/mood': typeof MoodRoute
+  '/screening': typeof ScreeningRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/help' | '/mood' | '/screening'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/help' | '/mood' | '/screening'
+  id: '__root__' | '/' | '/help' | '/mood' | '/screening'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HelpRoute: typeof HelpRoute
+  MoodRoute: typeof MoodRoute
+  ScreeningRoute: typeof ScreeningRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mood': {
+      id: '/mood'
+      path: '/mood'
+      fullPath: '/mood'
+      preLoaderRoute: typeof MoodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/screening': {
+      id: '/screening'
+      path: '/screening'
+      fullPath: '/screening'
+      preLoaderRoute: typeof ScreeningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HelpRoute: HelpRoute,
+  MoodRoute: MoodRoute,
+  ScreeningRoute: ScreeningRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
