@@ -16,7 +16,7 @@ describe("EPDS scoring", () => {
     expect(scoreEpds([3, 3, 0, 3, 0, 3, 3, 3, 3, 3]).level).toBe("likely");
   });
   it("10-12 is possible", () => {
-    expect(scoreEpds([2, 2, 1, 2, 2, 3, 3, 3, 3, 3]).total).toBe(10);
-    expect(scoreEpds([2, 2, 1, 2, 2, 3, 3, 3, 3, 3]).level).toBe("possible");
+    expect(scoreEpds([2, 2, 1, 2, 1, 3, 3, 3, 3, 3]).total).toBe(10);
+    expect(scoreEpds([2, 2, 1, 2, 1, 3, 3, 3, 3, 3]).level).toBe("possible");
   });
 });
