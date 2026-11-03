@@ -50,7 +50,7 @@ function Index() {
             </div>
           </motion.div>
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2, duration: 0.7 }}
-            className="rounded-4xl bg-card/85 p-7 shadow-soft backdrop-blur">
+            className="self-center rounded-4xl bg-card/85 p-7 shadow-soft backdrop-blur">
             <h2 className="font-display text-xl">{t.teaser}</h2>
             <div className="mt-5 grid grid-cols-4 gap-3 sm:grid-cols-7 md:grid-cols-4">
               {MOODS.map((m) => (
