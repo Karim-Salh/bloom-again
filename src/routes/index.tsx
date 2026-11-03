@@ -72,7 +72,7 @@ function Index() {
 
       <section className="mx-auto grid max-w-6xl gap-6 px-5 py-20 md:grid-cols-3">
         {t.features.map(([title, body], i) => {
-          const Icon = icons[i];
+          const Icon = icons[i]!;
           return (
             <motion.div key={title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }}
               className="rounded-3xl border bg-card p-7">
