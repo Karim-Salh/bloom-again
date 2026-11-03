@@ -65,9 +65,9 @@ function Screening() {
                 <div className="h-2 overflow-hidden rounded-full bg-muted">
                   <motion.div className="h-full bg-sage-deep" animate={{ width: `${((step + 1) / EPDS_ITEMS.length) * 100}%` }} />
                 </div>
-                <h2 className="mt-6 font-display text-xl md:text-2xl">{EPDS_ITEMS[step].q[lang]}</h2>
+                <h2 className="mt-6 font-display text-xl md:text-2xl">{EPDS_ITEMS[step]!.q[lang]}</h2>
                 <div className="mt-6 space-y-3" role="radiogroup">
-                  {EPDS_ITEMS[step].options[lang].map((o, i) => (
+                  {EPDS_ITEMS[step]!.options[lang].map((o, i) => (
                     <button key={o} role="radio" aria-checked={answers[step] === i} onClick={() => choose(i)}
                       className={`w-full rounded-2xl border p-4 text-start transition ${answers[step] === i ? "border-ring bg-secondary font-semibold" : "hover:bg-muted"}`}>
                       {o}

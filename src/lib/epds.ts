@@ -29,7 +29,7 @@ export const EPDS_ITEMS: Item[] = [
 
 /** Score for option index (0 = top option) of a given item. */
 export function itemScore(itemIndex: number, optionIndex: number): number {
-  return EPDS_ITEMS[itemIndex].reverse ? 3 - optionIndex : optionIndex;
+  return EPDS_ITEMS[itemIndex]!.reverse ? 3 - optionIndex : optionIndex;
 }
 
 export type EpdsResult = { total: number; safety: boolean; level: "low" | "possible" | "likely" };

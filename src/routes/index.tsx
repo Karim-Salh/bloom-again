@@ -50,7 +50,7 @@ function Index() {
             </div>
           </motion.div>
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2, duration: 0.7 }}
-            className="rounded-4xl bg-card/85 p-7 shadow-soft backdrop-blur">
+            className="self-center rounded-4xl bg-card/85 p-7 shadow-soft backdrop-blur">
             <h2 className="font-display text-xl">{t.teaser}</h2>
             <div className="mt-5 grid grid-cols-4 gap-3 sm:grid-cols-7 md:grid-cols-4">
               {MOODS.map((m) => (
@@ -72,7 +72,7 @@ function Index() {
 
       <section className="mx-auto grid max-w-6xl gap-6 px-5 py-20 md:grid-cols-3">
         {t.features.map(([title, body], i) => {
-          const Icon = icons[i];
+          const Icon = icons[i]!;
           return (
             <motion.div key={title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }}
               className="rounded-3xl border bg-card p-7">
