@@ -76,7 +76,7 @@ function Index() {
               <motion.img style={{ y: imgY }} src={heroImg} alt="A mother tenderly holding her newborn among blooming flowers" width={1200} height={1408} className="h-[460px] w-full scale-110 object-cover md:h-[560px]" />
             </div>
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1, ease }}
-              className="absolute -bottom-8 start-[-1rem] w-[88%] rounded-3xl border bg-card/90 p-5 shadow-soft backdrop-blur-xl md:start-[-3rem]">
+              className="absolute z-10 -bottom-8 start-[-1rem] w-[88%] rounded-3xl border bg-card/90 p-5 shadow-soft backdrop-blur-xl md:start-[-3rem]">
               <p className="font-display">{t.teaser}</p>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {MOODS.map((m) => (

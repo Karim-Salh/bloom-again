@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Phone, CheckCircle2, Circle } from "lucide-react";
 import { SiteShell } from "@/components/SiteShell";
 import { useI18n } from "@/lib/i18n";
+import { useSiteContent } from "@/lib/site-content";
 
 export const Route = createFileRoute("/help")({
   head: () => ({
@@ -18,18 +19,10 @@ export const Route = createFileRoute("/help")({
   component: Help,
 });
 
-const LINES = [
-  { country: "Egypt / مصر", name: "Mental Health Hotline", phone: "08008880700" },
-  { country: "Egypt / مصر", name: "Emergency / الإسعاف", phone: "123" },
-  { country: "Saudi Arabia / السعودية", name: "Mental health support (937)", phone: "937" },
-  { country: "UAE / الإمارات", name: "Emergency / الطوارئ", phone: "999" },
-  { country: "USA", name: "Postpartum Support International (call/text)", phone: "18009444773" },
-  { country: "USA", name: "988 Suicide & Crisis Lifeline", phone: "988" },
-  { country: "UK", name: "Samaritans", phone: "116123" },
-];
 
 function Help() {
   const { t } = useI18n();
+  const LINES = useSiteContent().lines;
   const [done, setDone] = useState<number[]>([]);
   return (
     <SiteShell>
@@ -39,7 +32,7 @@ function Help() {
         <h2 className="mt-10 font-display text-xl">{t.help.lines}</h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           {LINES.map((l) => (
-            <a key={l.name} href={`tel:${l.phone}`} className="flex items-center justify-between rounded-3xl border bg-card p-5 transition hover:shadow-soft">
+            <a key={l.name + l.phone} href={`tel:${l.phone}`} className="flex items-center justify-between rounded-3xl border bg-card p-5 transition hover:shadow-soft">
               <span><span className="block text-xs text-muted-foreground">{l.country}</span><span className="font-semibold">{l.name}</span></span>
               <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1.5 font-semibold" dir="ltr"><Phone className="h-4 w-4" />{l.phone}</span>
             </a>
