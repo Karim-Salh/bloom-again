@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as MoodRouteImport } from './routes/mood'
 import { Route as ScreeningRouteImport } from './routes/screening'
@@ -17,6 +18,11 @@ import { Route as ScreeningRouteImport } from './routes/screening'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HelpRoute = HelpRouteImport.update({
@@ -37,12 +43,14 @@ const ScreeningRoute = ScreeningRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/help': typeof HelpRoute
   '/mood': typeof MoodRoute
   '/screening': typeof ScreeningRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/help': typeof HelpRoute
   '/mood': typeof MoodRoute
   '/screening': typeof ScreeningRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/help': typeof HelpRoute
   '/mood': typeof MoodRoute
   '/screening': typeof ScreeningRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/help' | '/mood' | '/screening'
+  fullPaths: '/' | '/admin' | '/help' | '/mood' | '/screening'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/help' | '/mood' | '/screening'
-  id: '__root__' | '/' | '/help' | '/mood' | '/screening'
+  to: '/' | '/admin' | '/help' | '/mood' | '/screening'
+  id: '__root__' | '/' | '/admin' | '/help' | '/mood' | '/screening'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   HelpRoute: typeof HelpRoute
   MoodRoute: typeof MoodRoute
   ScreeningRoute: typeof ScreeningRoute
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/help': {
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   HelpRoute: HelpRoute,
   MoodRoute: MoodRoute,
   ScreeningRoute: ScreeningRoute,
