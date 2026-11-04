@@ -65,6 +65,7 @@ function AuthForm() {
     setBusy(false);
     if (error) return toast.error(error.message);
     if (mode === "up") toast.success("تم إنشاء الحساب — تحققي من بريدك لتأكيده");
+    return undefined;
   };
   return (
     <div className="grid min-h-screen place-items-center bg-hero px-5" dir="rtl">
@@ -123,6 +124,7 @@ function Editor({ email }: { email: string }) {
     if (error) return toast.error(error.message);
     await qc.invalidateQueries({ queryKey: siteContentQuery.queryKey });
     toast.success("تم حفظ التغييرات ونشرها على الموقع ✿");
+    return undefined;
   };
 
   return (
