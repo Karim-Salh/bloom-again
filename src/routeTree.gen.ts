@@ -14,7 +14,6 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as MoodRouteImport } from './routes/mood'
 import { Route as ScreeningRouteImport } from './routes/screening'
-import { Route as ApiPublicTmpAdminSetupRouteImport } from './routes/api/public/tmp-admin-setup'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,11 +40,6 @@ const ScreeningRoute = ScreeningRouteImport.update({
   path: '/screening',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicTmpAdminSetupRoute = ApiPublicTmpAdminSetupRouteImport.update({
-  id: '/api/public/tmp-admin-setup',
-  path: '/api/public/tmp-admin-setup',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -53,7 +47,6 @@ export interface FileRoutesByFullPath {
   '/help': typeof HelpRoute
   '/mood': typeof MoodRoute
   '/screening': typeof ScreeningRoute
-  '/api/public/tmp-admin-setup': typeof ApiPublicTmpAdminSetupRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +54,6 @@ export interface FileRoutesByTo {
   '/help': typeof HelpRoute
   '/mood': typeof MoodRoute
   '/screening': typeof ScreeningRoute
-  '/api/public/tmp-admin-setup': typeof ApiPublicTmpAdminSetupRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,33 +62,13 @@ export interface FileRoutesById {
   '/help': typeof HelpRoute
   '/mood': typeof MoodRoute
   '/screening': typeof ScreeningRoute
-  '/api/public/tmp-admin-setup': typeof ApiPublicTmpAdminSetupRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/admin'
-    | '/help'
-    | '/mood'
-    | '/screening'
-    | '/api/public/tmp-admin-setup'
+  fullPaths: '/' | '/admin' | '/help' | '/mood' | '/screening'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/admin'
-    | '/help'
-    | '/mood'
-    | '/screening'
-    | '/api/public/tmp-admin-setup'
-  id:
-    | '__root__'
-    | '/'
-    | '/admin'
-    | '/help'
-    | '/mood'
-    | '/screening'
-    | '/api/public/tmp-admin-setup'
+  to: '/' | '/admin' | '/help' | '/mood' | '/screening'
+  id: '__root__' | '/' | '/admin' | '/help' | '/mood' | '/screening'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -105,7 +77,6 @@ export interface RootRouteChildren {
   HelpRoute: typeof HelpRoute
   MoodRoute: typeof MoodRoute
   ScreeningRoute: typeof ScreeningRoute
-  ApiPublicTmpAdminSetupRoute: typeof ApiPublicTmpAdminSetupRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -145,13 +116,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScreeningRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/tmp-admin-setup': {
-      id: '/api/public/tmp-admin-setup'
-      path: '/api/public/tmp-admin-setup'
-      fullPath: '/api/public/tmp-admin-setup'
-      preLoaderRoute: typeof ApiPublicTmpAdminSetupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -161,7 +125,6 @@ const rootRouteChildren: RootRouteChildren = {
   HelpRoute: HelpRoute,
   MoodRoute: MoodRoute,
   ScreeningRoute: ScreeningRoute,
-  ApiPublicTmpAdminSetupRoute: ApiPublicTmpAdminSetupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -53,32 +53,26 @@ function AdminPage() {
 }
 
 function AuthForm() {
-  const [mode, setMode] = useState<"in" | "up">("in");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setBusy(true);
-    const { error } = mode === "in"
-      ? await supabase.auth.signInWithPassword({ email, password })
-      : await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/admin` } });
+    const u = username.trim().toLowerCase();
+    const email = u.includes("@") ? u : `${u}@gmail.com`;
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
-    if (error) return toast.error(error.message);
-    if (mode === "up") toast.success("تم إنشاء الحساب — تحققي من بريدك لتأكيده");
-    return undefined;
+    if (error) toast.error("اسم المستخدم أو كلمة المرور غير صحيحة");
   };
   return (
     <div className="grid min-h-screen place-items-center bg-hero px-5" dir="rtl">
       <motion.form onSubmit={submit} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-sm rounded-4xl bg-card p-8 shadow-soft">
         <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-brand text-primary-foreground"><Flower2 /></span>
         <h1 className="mt-5 font-display text-2xl">لوحة تحكم Bloom Again</h1>
-        <p className="mt-1 text-sm text-muted-foreground">{mode === "in" ? "سجّلي الدخول لإدارة الموقع" : "أول حساب يُنشأ يصبح المدير"}</p>
-        <input type="email" required placeholder="البريد الإلكتروني" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-6 w-full rounded-2xl border bg-background p-3 outline-none focus:ring-2 focus:ring-ring" dir="ltr" />
-        <input type="password" required minLength={8} placeholder="كلمة المرور" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-3 w-full rounded-2xl border bg-background p-3 outline-none focus:ring-2 focus:ring-ring" dir="ltr" />
-        <button disabled={busy} className="mt-5 w-full rounded-full bg-gradient-brand py-3 font-semibold text-primary-foreground disabled:opacity-50">{busy ? "…" : mode === "in" ? "دخول" : "إنشاء حساب"}</button>
-        <button type="button" onClick={() => setMode(mode === "in" ? "up" : "in")} className="mt-3 w-full text-sm text-muted-foreground hover:text-foreground">
-          {mode === "in" ? "ليس لديك حساب؟ أنشئي حسابًا" : "لديك حساب؟ سجّلي الدخول"}
-        </button>
+        <p className="mt-1 text-sm text-muted-foreground">سجّلي الدخول لإدارة الموقع</p>
+        <input required autoComplete="username" placeholder="اسم المستخدم" value={username} onChange={(e) => setUsername(e.target.value)} className="mt-6 w-full rounded-2xl border bg-background p-3 outline-none focus:ring-2 focus:ring-ring" dir="ltr" />
+        <input type="password" required autoComplete="current-password" placeholder="كلمة المرور" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-3 w-full rounded-2xl border bg-background p-3 outline-none focus:ring-2 focus:ring-ring" dir="ltr" />
+        <button disabled={busy} className="mt-5 w-full rounded-full bg-gradient-brand py-3 font-semibold text-primary-foreground disabled:opacity-50">{busy ? "…" : "دخول"}</button>
       </motion.form>
     </div>
   );
