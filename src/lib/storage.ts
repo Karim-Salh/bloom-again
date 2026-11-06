@@ -1,6 +1,5 @@
 export const MOODS = ["happy", "calm", "okay", "tired", "anxious", "sad", "overwhelmed"] as const;
 export type Mood = (typeof MOODS)[number];
-export const MOOD_EMOJI: Record<Mood, string> = { happy: "🌼", calm: "🍃", okay: "🌤️", tired: "🌙", anxious: "🌊", sad: "🌧️", overwhelmed: "🌪️" };
 /** Higher = brighter mood, used for the trend chart. */
 export const MOOD_VALUE: Record<Mood, number> = { happy: 7, calm: 6, okay: 5, tired: 4, anxious: 3, sad: 2, overwhelmed: 1 };
 

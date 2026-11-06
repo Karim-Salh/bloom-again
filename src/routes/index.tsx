@@ -2,10 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 import { ArrowRight, HeartHandshake, NotebookPen, ShieldCheck } from "lucide-react";
+import { Activity, BatteryLow, CloudAlert, Frown, Leaf, Meh, Smile, type LucideIcon } from "lucide-react";
 import { SiteShell } from "@/components/SiteShell";
 import { useI18n } from "@/lib/i18n";
 import { useSiteContent } from "@/lib/site-content";
-import { MOODS, MOOD_EMOJI, type Mood } from "@/lib/storage";
+import { MOODS, type Mood } from "@/lib/storage";
 import heroImg from "@/assets/hero-mother.jpg";
 
 export const Route = createFileRoute("/")({
@@ -23,6 +24,15 @@ export const Route = createFileRoute("/")({
 });
 
 const ease = [0.22, 1, 0.36, 1] as const;
+const moodIcons: Record<Mood, LucideIcon> = {
+  happy: Smile,
+  calm: Leaf,
+  okay: Meh,
+  tired: BatteryLow,
+  anxious: Activity,
+  sad: Frown,
+  overwhelmed: CloudAlert,
+};
 
 function Petal({ className, delay = 0 }: { className: string; delay?: number }) {
   return (
@@ -78,10 +88,13 @@ function Index() {
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1, ease }}
               className="absolute z-10 -bottom-8 start-[-1rem] w-[88%] rounded-3xl border bg-card/90 p-5 shadow-soft backdrop-blur-xl md:start-[-3rem]">
               <p className="font-display">{t.teaser}</p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
+              <div className="mt-3 grid grid-cols-4 gap-2">
                 {MOODS.map((m) => (
-                  <motion.button key={m} whileHover={{ scale: 1.15, y: -3 }} whileTap={{ scale: 0.9 }} onClick={() => setMood(m)} title={t.moods[m]}
-                    className={`grid h-10 w-10 place-items-center rounded-xl text-xl transition ${mood === m ? "bg-secondary ring-2 ring-ring" : "hover:bg-muted"}`}>{MOOD_EMOJI[m]}</motion.button>
+                  <motion.button key={m} whileHover={{ y: -2 }} whileTap={{ scale: 0.96 }} onClick={() => setMood(m)} title={t.moods[m]} aria-label={t.moods[m]}
+                    className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl px-1 py-2 text-[11px] leading-tight transition ${mood === m ? "bg-secondary ring-2 ring-ring" : "hover:bg-muted"}`}>
+                    {(() => { const Icon = moodIcons[m]; return <Icon className="h-5 w-5" aria-hidden="true" />; })()}
+                    <span>{t.moods[m]}</span>
+                  </motion.button>
                 ))}
               </div>
               <AnimatePresence mode="wait">

@@ -1,10 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
+import { Activity, BatteryLow, CloudAlert, Frown, Leaf, Meh, Smile, type LucideIcon } from "lucide-react";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { SiteShell } from "@/components/SiteShell";
 import { useI18n } from "@/lib/i18n";
-import { loadMoods, saveMood, todayKey, MOODS, MOOD_EMOJI, MOOD_VALUE, type Mood, type MoodEntry } from "@/lib/storage";
+import { loadMoods, saveMood, todayKey, MOODS, MOOD_VALUE, type Mood, type MoodEntry } from "@/lib/storage";
+
+const moodIcons: Record<Mood, LucideIcon> = {
+  happy: Smile,
+  calm: Leaf,
+  okay: Meh,
+  tired: BatteryLow,
+  anxious: Activity,
+  sad: Frown,
+  overwhelmed: CloudAlert,
+};
 
 export const Route = createFileRoute("/mood")({
   head: () => ({
@@ -54,8 +65,10 @@ function MoodPage() {
           <div className="mt-3 grid grid-cols-4 gap-3 sm:grid-cols-7">
             {MOODS.map((m) => (
               <motion.button key={m} whileHover={{ y: -4 }} whileTap={{ scale: 0.9 }} onClick={() => { setMood(m); setSaved(false); }}
-                className={`flex flex-col items-center gap-1 rounded-2xl p-2 text-xs ${mood === m ? "bg-secondary ring-2 ring-ring" : "hover:bg-muted"}`}>
-                <span className="text-3xl">{MOOD_EMOJI[m]}</span>{t.moods[m]}
+                aria-pressed={mood === m} aria-label={t.moods[m]}
+                className={`flex min-h-20 flex-col items-center justify-center gap-2 rounded-2xl p-2 text-xs ${mood === m ? "bg-secondary ring-2 ring-ring" : "hover:bg-muted"}`}>
+                {(() => { const Icon = moodIcons[m]; return <Icon className="h-6 w-6" aria-hidden="true" />; })()}
+                <span>{t.moods[m]}</span>
               </motion.button>
             ))}
           </div>
@@ -95,10 +108,11 @@ function MoodPage() {
               {Array.from({ length: days }, (_, i) => {
                 const k = new Date(Date.UTC(now.getFullYear(), now.getMonth(), i + 1)).toISOString().slice(0, 10);
                 const e = byDate[k];
+                const Icon = e ? moodIcons[e.mood] : null;
                 return (
                   <div key={k} title={e ? `${t.moods[e.mood as Mood]}${e.note ? " — " + e.note : ""}` : ""}
-                    className={`grid aspect-square place-items-center rounded-xl text-xs ${e ? "bg-secondary text-lg" : "bg-muted text-muted-foreground"}`}>
-                    {e ? MOOD_EMOJI[e.mood as Mood] : i + 1}
+                    className={`grid aspect-square place-items-center rounded-xl text-xs ${e ? "bg-secondary" : "bg-muted text-muted-foreground"}`}>
+                    {Icon ? <Icon className="h-4 w-4" aria-hidden="true" /> : i + 1}
                   </div>
                 );
               })}
