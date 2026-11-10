@@ -14,6 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
+      epds_records: {
+        Row: {
+          created_at: string
+          id: string
+          recorded_at: string
+          safety: boolean
+          total: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          recorded_at: string
+          safety?: boolean
+          total: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          recorded_at?: string
+          safety?: boolean
+          total?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      mood_entries: {
+        Row: {
+          created_at: string
+          energy: number
+          entry_date: string
+          id: string
+          mood: string
+          note: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          energy: number
+          entry_date: string
+          id?: string
+          mood: string
+          note?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          energy?: number
+          entry_date?: string
+          id?: string
+          mood?: string
+          note?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       site_settings: {
         Row: {
           content: Json
