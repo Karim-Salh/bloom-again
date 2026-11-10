@@ -8,6 +8,13 @@
       "when": 1793730316657,
       "tag": "0000_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794341097706,
+      "tag": "0001_add_optional_accounts_and_private_progress",
+      "breakpoints": true
     }
   ]
 }
