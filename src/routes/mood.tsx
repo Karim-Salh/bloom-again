@@ -5,7 +5,9 @@ import { Activity, BatteryLow, CloudAlert, Frown, Leaf, Meh, Smile, type LucideI
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { SiteShell } from "@/components/SiteShell";
 import { useI18n } from "@/lib/i18n";
-import { loadMoods, saveMood, todayKey, MOODS, MOOD_VALUE, type Mood, type MoodEntry } from "@/lib/storage";
+import { todayKey, MOODS, MOOD_VALUE, type Mood, type MoodEntry } from "@/lib/storage";
+import { loadMoodProgress, saveMoodProgress } from "@/lib/progress";
+import { toast } from "sonner";
 
 const moodIcons: Record<Mood, LucideIcon> = {
   happy: Smile,
@@ -40,10 +42,25 @@ function MoodPage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const list = loadMoods(); setEntries(list);
-    const today = list.find((e) => e.date === todayKey());
-    if (today) { setMood(today.mood); setEnergy(today.energy); setNote(today.note); }
+    let active = true;
+    void loadMoodProgress().then((list) => {
+      if (!active) return;
+      setEntries(list);
+      const today = list.find((e) => e.date === todayKey());
+      if (today) { setMood(today.mood); setEnergy(today.energy); setNote(today.note); }
+    }).catch(() => toast.error("Unable to load saved progress."));
+    return () => { active = false; };
   }, []);
+
+  const saveEntry = async () => {
+    if (!mood) return;
+    try {
+      setEntries(await saveMoodProgress({ date: todayKey(), mood, energy, note: note.trim() }));
+      setSaved(true);
+    } catch {
+      toast.error("Unable to save your entry. Please try again.");
+    }
+  };
 
   const byDate = useMemo(() => Object.fromEntries(entries.map((e) => [e.date, e])), [entries]);
   const trend = useMemo(() => Array.from({ length: 14 }, (_, i) => {
@@ -79,7 +96,7 @@ function MoodPage() {
             <textarea value={note} maxLength={500} onChange={(e) => setNote(e.target.value)} rows={3}
               className="mt-2 w-full rounded-2xl border bg-background p-3 font-normal outline-none focus:ring-2 focus:ring-ring" />
           </label>
-          <button disabled={!mood} onClick={() => { if (!mood) return; setEntries(saveMood({ date: todayKey(), mood, energy, note: note.trim() })); setSaved(true); }}
+          <button disabled={!mood} onClick={() => void saveEntry()}
             className="mt-4 rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground disabled:opacity-40">{t.mood.save}</button>
           {saved && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-3 text-primary">{t.mood.saved}</motion.p>}
         </div>

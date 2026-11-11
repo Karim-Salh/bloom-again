@@ -5,7 +5,9 @@ import { AlertTriangle } from "lucide-react";
 import { SiteShell } from "@/components/SiteShell";
 import { useI18n } from "@/lib/i18n";
 import { EPDS_ITEMS, scoreEpds } from "@/lib/epds";
-import { loadEpds, saveEpds, type EpdsRecord } from "@/lib/storage";
+import { type EpdsRecord } from "@/lib/storage";
+import { loadEpdsProgress, saveEpdsProgress } from "@/lib/progress";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/screening")({
   head: () => ({
@@ -30,7 +32,13 @@ function Screening() {
   const done = step === EPDS_ITEMS.length;
   const result = done ? scoreEpds(answers) : null;
 
-  useEffect(() => setHistory(loadEpds()), []);
+  useEffect(() => {
+    let active = true;
+    void loadEpdsProgress().then((records) => {
+      if (active) setHistory(records);
+    }).catch(() => toast.error("Unable to load saved progress."));
+    return () => { active = false; };
+  }, []);
 
   const choose = (opt: number) => {
     const next = [...answers]; next[step] = opt; setAnswers(next);
@@ -38,7 +46,9 @@ function Screening() {
   const advance = () => {
     if (step === EPDS_ITEMS.length - 1) {
       const r = scoreEpds(answers);
-      setHistory(saveEpds({ date: new Date().toISOString(), total: r.total, safety: r.safety }));
+      void saveEpdsProgress({ date: new Date().toISOString(), total: r.total, safety: r.safety })
+        .then(setHistory)
+        .catch(() => toast.error("Unable to save your screening. Please try again."));
     }
     setStep(step + 1);
   };
