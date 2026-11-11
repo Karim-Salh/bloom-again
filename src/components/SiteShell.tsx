@@ -1,13 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
-import { Flower2, Languages, Menu, Phone, X, Sparkles } from "lucide-react";
+import { Flower2, Languages, Menu, Phone, X, Sparkles, UserRound } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { useI18n } from "@/lib/i18n";
 import { useSiteContent } from "@/lib/site-content";
+import { useAuth } from "@/lib/auth";
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const { t, toggle, lang } = useI18n();
   const c = useSiteContent();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(true);
   const { scrollYProgress } = useScroll();
@@ -17,6 +19,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
     { to: "/screening", label: t.nav.screening },
     { to: "/mood", label: t.nav.mood },
     { to: "/help", label: t.nav.help },
+    { to: "/account", label: user ? t.nav.account : t.account.signIn },
   ] as const;
 
   return (
@@ -49,6 +52,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 activeProps={{ className: "bg-secondary text-foreground font-semibold" }}>{l.label}</Link>
             ))}
             <Link to="/help" className="ms-1 inline-flex items-center gap-1.5 rounded-full bg-rose/60 px-3.5 py-2 font-semibold"><Phone className="h-3.5 w-3.5" />{t.emergencyCta}</Link>
+            <Link to="/account" aria-label={t.nav.account} className="ms-1 inline-flex h-9 w-9 items-center justify-center rounded-full border hover:bg-muted"><UserRound className="h-4 w-4" /></Link>
             <button onClick={toggle} className="ms-1 inline-flex items-center gap-1 rounded-full border px-3 py-2 hover:bg-muted" aria-label="Switch language">
               <Languages className="h-4 w-4" /> {t.lang}
             </button>
