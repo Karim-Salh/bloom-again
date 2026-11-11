@@ -177,7 +177,7 @@ function AccountPage() {
                   <ProgressStat label={a.latestScore} value={latestScreening ? `${latestScreening.total} / 30` : "—"} />
                 </div>
                 {moods.length === 0 && screenings.length === 0 && <p className="mt-4 text-sm text-muted-foreground">{a.noProgress}</p>}
-                {moods.length > 0 && <p className="mt-4 text-sm text-muted-foreground">{a.moodEntries}: {moods.slice(-7).reverse().map((entry) => `${new Date(`${entry.date}T12:00:00`).toLocaleDateString(lang === "ar" ? "ar-EG" : "en-GB")} · ${t.moods[entry.mood]}`).join("  ·  ")}</p>}
+                <p className="mt-4 text-sm text-muted-foreground">{a.moodEntries}: {moods.slice(-7).reverse().map((entry) => `${new Date(`${entry.date}T12:00:00`).toLocaleDateString(lang === "ar" ? "ar-EG" : "en-GB")} · ${t.moods[entry.mood]}`).join("  ·  ")}</p>}
                 {screenings.length > 0 && <p className="mt-2 text-sm text-muted-foreground">{a.screenings}: {screenings.slice(-5).reverse().map((entry) => `${new Date(entry.date).toLocaleDateString(lang === "ar" ? "ar-EG" : "en-GB")} · ${entry.total}${entry.safety ? " ⚠" : ""}`).join("  ·  ")}</p>}
               </section>
             </div>

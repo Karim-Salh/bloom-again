@@ -48,9 +48,9 @@ function MoodPage() {
       setEntries(list);
       const today = list.find((e) => e.date === todayKey());
       if (today) { setMood(today.mood); setEnergy(today.energy); setNote(today.note); }
-    }).catch(() => toast.error("Unable to load saved progress."));
+    }).catch(() => toast.error(t.mood.loadError));
     return () => { active = false; };
-  }, []);
+  }, [t.mood.loadError]);
 
   const saveEntry = async () => {
     if (!mood) return;
@@ -58,7 +58,7 @@ function MoodPage() {
       setEntries(await saveMoodProgress({ date: todayKey(), mood, energy, note: note.trim() }));
       setSaved(true);
     } catch {
-      toast.error("Unable to save your entry. Please try again.");
+      toast.error(t.mood.saveError);
     }
   };
 

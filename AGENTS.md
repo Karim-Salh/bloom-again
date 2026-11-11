@@ -13,3 +13,4 @@
 - EPDS scoring logic lives only in `src/lib/epds.ts` with tests beside it; screening UI must not re-implement scoring.
 - Phase 1 stores mood/EPDS data in browser localStorage via `src/lib/storage.ts`; swap that module when Cloud persistence is added.
 - Admin-editable site content (banner, hero text, quotes, crisis lines) is one JSON row in `site_settings`, read via `src/lib/site-content.ts` and merged over defaults; only users with the `admin` role in `user_roles` can write it (RLS). Admin signs in at /admin with a username (mapped to the account email); there is no sign-up there.
+- Optional member accounts are provided by the global `AuthProvider`; profile fields live in `profiles`, while mood and EPDS history switch between device-only storage when signed out and RLS-protected user-owned rows when signed in, so private progress is never public.

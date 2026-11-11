@@ -31,13 +31,13 @@ const dict = {
     moods: { happy: "Happy", calm: "Calm", okay: "Okay", tired: "Tired", anxious: "Anxious", sad: "Sad", overwhelmed: "Overwhelmed" },
     screening: {
       title: "EPDS Check-in", intro: "Over the past 7 days, choose the answer closest to how you have felt.", start: "Begin", question: "Question", of: "of", back: "Back", next: "Next", see: "See results",
-      result: "Your screening score", low: "Your answers suggest a lower likelihood of depression. Keep caring for yourself, and screen again if things change.",
+      result: "Your screening score", loadError: "Unable to load saved progress.", saveError: "Unable to save your screening. Please try again.", low: "Your answers suggest a lower likelihood of depression. Keep caring for yourself, and screen again if things change.",
       possible: "Your answers suggest possible depression. We gently recommend talking to your doctor or midwife.",
       likely: "Your answers suggest depression may be likely. Please contact a healthcare professional soon — support works.",
       safetyTitle: "Your safety matters most", safetyBody: "You indicated thoughts of harming yourself. Please contact emergency services or a crisis line now, or tell someone you trust. You deserve immediate support.",
       retake: "Retake", history: "Previous check-ins", note: "Screening only — not a diagnosis. Results are saved privately on this device.",
     },
-    mood: { title: "Mood Tracker", pick: "How do you feel today?", energy: "Energy level", note: "A note for yourself (optional)", save: "Save entry", saved: "Saved. Be gentle with yourself today.", trend: "Your last 14 days", calendar: "This month", empty: "No entries yet — your first log starts your story." },
+    mood: { title: "Mood Tracker", pick: "How do you feel today?", energy: "Energy level", note: "A note for yourself (optional)", save: "Save entry", saved: "Saved. Be gentle with yourself today.", saveError: "Unable to save your entry. Please try again.", loadError: "Unable to load saved progress.", trend: "Your last 14 days", calendar: "This month", empty: "No entries yet — your first log starts your story." },
     account: {
       title: "Your account & progress", intro: "Create an account to keep your mood and screening history available across visits.",
       signIn: "Sign in", signUp: "Create account", email: "Email address", password: "Password", displayName: "Name (optional)",
@@ -81,13 +81,13 @@ const dict = {
     moods: { happy: "سعيدة", calm: "هادئة", okay: "بخير", tired: "متعبة", anxious: "قلقة", sad: "حزينة", overwhelmed: "مُرهقة" },
     screening: {
       title: "فحص إدنبرة", intro: "خلال الأيام السبعة الماضية، اختاري الإجابة الأقرب لما شعرتِ به.", start: "ابدئي", question: "السؤال", of: "من", back: "السابق", next: "التالي", see: "عرض النتيجة",
-      result: "نتيجة الفحص", low: "تشير إجاباتك إلى احتمال منخفض للاكتئاب. استمري في الاهتمام بنفسك وأعيدي الفحص إن تغيرت الأمور.",
+      result: "نتيجة الفحص", loadError: "تعذر تحميل تقدمك المحفوظ.", saveError: "تعذر حفظ نتيجة الفحص. حاولي مرة أخرى.", low: "تشير إجاباتك إلى احتمال منخفض للاكتئاب. استمري في الاهتمام بنفسك وأعيدي الفحص إن تغيرت الأمور.",
       possible: "تشير إجاباتك إلى احتمال وجود اكتئاب. ننصحك بلطف بالتحدث مع طبيبتك أو القابلة.",
       likely: "تشير إجاباتك إلى أن الاكتئاب محتمل. يرجى التواصل مع مختص صحي قريبًا — الدعم يُحدث فرقًا.",
       safetyTitle: "سلامتك هي الأهم", safetyBody: "أشرتِ إلى أفكار عن إيذاء النفس. يرجى الاتصال بالطوارئ أو خط دعم الأزمات الآن، أو إخبار شخص تثقين به. أنتِ تستحقين الدعم فورًا.",
       retake: "إعادة الفحص", history: "الفحوصات السابقة", note: "فحص فقط — وليس تشخيصًا. تُحفظ النتائج بشكل خاص على هذا الجهاز.",
     },
-    mood: { title: "متتبع المزاج", pick: "كيف تشعرين اليوم؟", energy: "مستوى الطاقة", note: "ملاحظة لنفسك (اختياري)", save: "حفظ", saved: "تم الحفظ. كوني لطيفة مع نفسك اليوم.", trend: "آخر ١٤ يومًا", calendar: "هذا الشهر", empty: "لا توجد تسجيلات بعد — أول تسجيل يبدأ قصتك." },
+    mood: { title: "متتبع المزاج", pick: "كيف تشعرين اليوم؟", energy: "مستوى الطاقة", note: "ملاحظة لنفسك (اختياري)", save: "حفظ", saved: "تم الحفظ. كوني لطيفة مع نفسك اليوم.", saveError: "تعذر حفظ تسجيلك. حاولي مرة أخرى.", loadError: "تعذر تحميل تقدمك المحفوظ.", trend: "آخر ١٤ يومًا", calendar: "هذا الشهر", empty: "لا توجد تسجيلات بعد — أول تسجيل يبدأ قصتك." },
     account: {
       title: "حسابك ومتابعتك", intro: "أنشئي حسابًا للاحتفاظ بسجل المزاج والفحوصات ومتابعته في زياراتك القادمة.",
       signIn: "تسجيل الدخول", signUp: "إنشاء حساب", email: "البريد الإلكتروني", password: "كلمة المرور", displayName: "الاسم (اختياري)",

@@ -104,14 +104,14 @@ export async function importDeviceProgress(): Promise<{ moods: number; screening
   if (local.moods.length > 0) {
     const { error } = await supabase.from("mood_entries").upsert(
       local.moods.map((entry) => moodRowForUser(user.id, entry)),
-      { onConflict: "user_id,entry_date" },
+      { onConflict: "user_id,entry_date", ignoreDuplicates: true },
     );
     if (error) throw error;
   }
   if (local.screenings.length > 0) {
     const { error } = await supabase.from("epds_records").upsert(
       local.screenings.map((entry) => epdsRowForUser(user.id, entry)),
-      { onConflict: "user_id,recorded_at" },
+      { onConflict: "user_id,recorded_at", ignoreDuplicates: true },
     );
     if (error) throw error;
   }

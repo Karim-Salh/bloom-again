@@ -36,9 +36,9 @@ function Screening() {
     let active = true;
     void loadEpdsProgress().then((records) => {
       if (active) setHistory(records);
-    }).catch(() => toast.error("Unable to load saved progress."));
+    }).catch(() => toast.error(s.loadError));
     return () => { active = false; };
-  }, []);
+  }, [s.loadError]);
 
   const choose = (opt: number) => {
     const next = [...answers]; next[step] = opt; setAnswers(next);
@@ -48,7 +48,7 @@ function Screening() {
       const r = scoreEpds(answers);
       void saveEpdsProgress({ date: new Date().toISOString(), total: r.total, safety: r.safety })
         .then(setHistory)
-        .catch(() => toast.error("Unable to save your screening. Please try again."));
+        .catch(() => toast.error(s.saveError));
     }
     setStep(step + 1);
   };
